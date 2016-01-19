@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="nodeNumber" format="integer"/>
+    <attr name="cycleRadius" format="integer"/>
+    <attr name="cycleBackgroundColorBefore" format="color"/>
+    <attr name="cycleBackgroundColorAfter" format="color"/>
+    <attr name="progress" format="integer"/>
+    <attr name="orientation">
+        <flag name="vertical" value="0"/>
+        <flag name="horizontal" value="1"/>
+    </attr>
+    <attr name="cycleBackgroundBefore" format="reference"/>
+    <attr name="cycleBackgroundAfter" format="reference"/>
+
+    <declare-styleable name="NodeSeekBar">
+        <attr name="nodeNumber"/>
+        <attr name="cycleRadius"/>
+        <attr name="cycleBackgroundColorBefore"/>
+        <attr name="cycleBackgroundColorAfter"/>
+        <attr name="progress"/>
+        <attr name="orientation"/>
+        <attr name="cycleBackgroundBefore"/>
+        <attr name="cycleBackgroundAfter"/>
+    </declare-styleable>
+</resources>
