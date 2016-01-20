@@ -22,9 +22,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 ```
-设置节点数nodeNumber=int，当前进度progress=int，节点圆半径cycleRadius=int\<br>
-节点圆两种颜色cycleBackgroundColorBefore=color、cycleBackgroundColorAfter=color\<br>
-方向orientation=(vertical、horizontal)\<br>
+设置节点数nodeNumber=int，当前进度progress=int，节点圆半径cycleRadius=int;
+节点圆两种颜色cycleBackgroundColorBefore=color、cycleBackgroundColorAfter=color;
+方向orientation=(vertical、horizontal)。
 
 2、在java代码中设置进度变化事件监听器
 ```java
