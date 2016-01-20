@@ -6,6 +6,7 @@
 现在可以设置NodeSeekBar的方向，圆的大小、颜色，线段颜色等，当然也能设置节点的数量。
 
 使用方法：
+
 1、在布局文件中添加NodeSeekBar
 
 <com.mouse.cookie.nodeseekbar.NodeSeekBar
