@@ -8,7 +8,7 @@
 使用方法：
 
 1、在布局文件中添加NodeSeekBar
-```
+```xml
 <com.mouse.cookie.nodeseekbar.NodeSeekBar
         android:id="@+id/nsb_mainactivity"
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
 设置节点数nodeNumber=int，当前进度progress=int，节点圆半径cycleRadius=int，节点圆两种颜色cycleBackgroundColorBefore=color、cycleBackgroundColorAfter=color，方向orientation=(vertical、horizontal)。
 
 2、在java代码中设置进度变化事件监听器
-```
+```java
 mNodeSeekBar.setOnProgressChangedListener(new NodeSeekBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(int i) {
@@ -34,7 +34,7 @@ mNodeSeekBar.setOnProgressChangedListener(new NodeSeekBar.OnProgressChangedListe
         });
 ```
 3、获取当前进度
-```
+```java
 mNodeSeekBar.getProgress();
 ```
 实例：
