@@ -39,5 +39,7 @@ mNodeSeekBar.setOnProgressChangedListener(new NodeSeekBar.OnProgressChangedListe
 ```java
 mNodeSeekBar.getProgress();
 ```
-实例：
+效果：<br>
+![image](https://github.com/cookiemouse/NodeSeekBar/blob/master/image/image_1.png)
+![image](https://github.com/cookiemouse/NodeSeekBar/blob/master/image/image_2.png)
 
