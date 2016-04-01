@@ -43,3 +43,12 @@ mNodeSeekBar.getProgress();
 ![image](https://github.com/cookiemouse/NodeSeekBar/blob/master/image/image_1.png)
 ![image](https://github.com/cookiemouse/NodeSeekBar/blob/master/image/image_2.png)
 
+4、更新
+2016.04.01
+增加可在节点处添加文字的功能
+
+使用方法
+```java
+mNodeSeekBar.setString(List<String>);
+```
+竖型NodeSeekBar是以从下到上的顺序添加文字，横型NodeSeekBar是以从左到右的顺序添加文字。
