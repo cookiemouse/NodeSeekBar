@@ -5,11 +5,14 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cookie on 2016/1/18.
@@ -23,13 +26,15 @@ public class NodeSeekBar extends View {
     private int nodeNumber;
     private int progress;
     private int cycleRadius;
+    private int textSize;
     private int cycleBackgroundColorBefore;
     private int cycleBackgroundColorAfter;
-    private Drawable cycleBackgroundBefore;
-    private Drawable cycleBackgroundAfter;
     private int orientation;    //方向
 
     private Paint mPaint;
+
+    private List<String> mStringList = new ArrayList<>();
+    private Rect mRectText = new Rect();
 
     int mWidth, mHeight;
 
@@ -61,17 +66,16 @@ public class NodeSeekBar extends View {
             } else if (R.styleable.NodeSeekBar_progress == attr) {
                 progress = mTypedArray.getInt(attr, 1);
             } else if (R.styleable.NodeSeekBar_cycleRadius == attr) {
-                cycleRadius = mTypedArray.getInt(attr, 10);
+//                cycleRadius = mTypedArray.getInt(attr, 10);
+                cycleRadius = mTypedArray.getDimensionPixelSize(attr, 10);
+            } else if (R.styleable.NodeSeekBar_textSize == attr) {
+                textSize = mTypedArray.getDimensionPixelSize(attr, 10);
             } else if (R.styleable.NodeSeekBar_cycleBackgroundColorBefore == attr) {
                 cycleBackgroundColorBefore = mTypedArray.getColor(attr, Color.WHITE);
             } else if (R.styleable.NodeSeekBar_cycleBackgroundColorAfter == attr) {
                 cycleBackgroundColorAfter = mTypedArray.getColor(attr, Color.WHITE);
             } else if (R.styleable.NodeSeekBar_orientation == attr) {
                 orientation = mTypedArray.getInt(attr, VERTICAL);
-            } else if (R.styleable.NodeSeekBar_cycleBackgroundBefore == attr) {
-                cycleBackgroundBefore = mTypedArray.getDrawable(attr);
-            } else if (R.styleable.NodeSeekBar_cycleBackgroundAfter == attr) {
-                cycleBackgroundAfter = mTypedArray.getDrawable(attr);
             }
         }
 
@@ -163,6 +167,10 @@ public class NodeSeekBar extends View {
         return true;
     }
 
+    public void setString(List<String> stringList) {
+        this.mStringList = stringList;
+    }
+
     private int getProgress(int eventPosition) {
         if (orientation == VERTICAL) {
             if (eventPosition <= mHeight && eventPosition > 0) {
@@ -195,26 +203,29 @@ public class NodeSeekBar extends View {
             for (int i = 0; i < nodeNumber; i++) {
                 if (i < progress) {
                     mPaint.setColor(cycleBackgroundColorAfter);
-
-                    //节点处作画
-                    if (null != cycleBackgroundAfter) {
-                        cycleBackgroundAfter.draw(canvas);
-                    }
-
                 } else {
                     mPaint.setColor(cycleBackgroundColorBefore);
                 }
-
-                //作圆
-                canvas.drawCircle(mWidth / 2, mHeight - ((2 * i + 1) * cycleRadius + i * lineHeight), cycleRadius,
-                        mPaint);
-                Log.e("Tag_Point", "圆心(" + mWidth / 2 + "," + (mHeight - ((2 * i + 1) * cycleRadius + i * lineHeight)
-                ) + ")<----" + i);
 
                 //作线
                 mPaint.setStrokeWidth(cycleRadius / 3);
                 canvas.drawLine(mWidth / 2, (mHeight - ((2 * i) * cycleRadius + (i - 1) * lineHeight)),
                         mWidth / 2, mHeight - ((2 * i + 1) * cycleRadius + i * lineHeight), mPaint);
+
+                //作圆
+                canvas.drawCircle(mWidth / 2, mHeight - ((2 * i + 1) * cycleRadius + i * lineHeight)
+                        , cycleRadius, mPaint);
+
+                mPaint.setColor(0xffffffff);
+                mPaint.setTextSize(textSize);
+                String text;
+                if (mStringList.size() > i) {
+                    text = mStringList.get(i);
+                    mPaint.getTextBounds(text, 0, text.length(), mRectText);
+                    int textHeight = mRectText.bottom - mRectText.top;
+                    canvas.drawText(text, (mWidth - mRectText.right) / 2
+                            , mHeight - ((2 * i + 1) * cycleRadius + i * lineHeight) + (textHeight / 2), mPaint);
+                }
             }
 
         } else {
@@ -241,18 +252,26 @@ public class NodeSeekBar extends View {
                     mPaint.setColor(cycleBackgroundColorBefore);
                 }
 
-                //作圆
-//                canvas.drawCircle(mWidth - ((2 * i + 1) * cycleRadius + i * lineWidth), mHeight / 2, cycleRadius,
-//                        mPaint);
-                canvas.drawCircle((2 * i + 1) * cycleRadius + i * lineWidth, mHeight / 2, cycleRadius,
-                        mPaint);
-                Log.e("Tag_Point", "圆心(" + ((2 * i + 1) * cycleRadius + i * lineWidth) + "," + mHeight / 2
-                        + ")<----" + i);
-
                 //作线
                 mPaint.setStrokeWidth(cycleRadius / 3);
                 canvas.drawLine(((2 * i) * cycleRadius + (i - 1) * lineWidth), mHeight / 2,
                         (2 * i + 1) * cycleRadius + i * lineWidth, mHeight / 2, mPaint);
+
+                //作圆
+                canvas.drawCircle((2 * i + 1) * cycleRadius + i * lineWidth, mHeight / 2, cycleRadius,
+                        mPaint);
+
+                //文字
+                mPaint.setColor(0xffffffff);
+                mPaint.setTextSize(textSize);
+                String text;
+                if (mStringList.size() > i) {
+                    text = mStringList.get(i);
+                    mPaint.getTextBounds(text, 0, text.length(), mRectText);
+                    int textHeight = mRectText.bottom - mRectText.top;
+                    canvas.drawText(text, (2 * i + 1) * cycleRadius + i * lineWidth - mRectText.right / 2
+                            , (mHeight + textHeight) / 2, mPaint);
+                }
             }
 
         } else {
